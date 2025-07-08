@@ -1,0 +1,2 @@
+D:/flutter-projects/travel/android/app/.cxx/RelWithDebInfo/29552q32/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/flutter-projects/travel/android/app/.cxx/RelWithDebInfo/29552q32/arm64-v8a/CMakeFiles/rebuild_cache.dir
