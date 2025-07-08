@@ -176,7 +176,7 @@ class _TaskPageState extends State<TaskPage> {
             title: const Text("Logout"),
             onTap: () async {
               await FirebaseAuth.instance.signOut();
-              if (context.mounted) {
+              if (mounted) {
                 Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false);
               }
             },

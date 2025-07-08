@@ -33,7 +33,7 @@ class RegisterPage extends StatelessWidget {
         listener: (context, state) {
           if (state is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("❌ ${state.error}")),
+              SnackBar(content: Text(state.error)),
             );
           }
           if (state is AuthSuccess) {

@@ -20,8 +20,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         password: event.password,
       );
       emit(AuthSuccess());
-    } catch (e) {
-      emit(AuthFailure("Credential does not match"));
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+      switch (e.code) {
+        case 'invalid-email':
+          errorMessage = "📧 The email address is not valid.";
+          break;
+        case 'user-not-found':
+          errorMessage = "👤 No user found for that email.";
+          break;
+        case 'wrong-password':
+          errorMessage = "🔑 Incorrect password.";
+          break;
+        default:
+          errorMessage = "❌ Please fill all fields";
+      }
+      emit(AuthFailure(errorMessage));
+    } catch (_) {
+      emit(AuthFailure("❌ Unknown login error."));
     }
   }
 
@@ -33,8 +49,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         password: event.password,
       );
       emit(AuthSuccess());
-    } catch (e) {
-      emit(AuthFailure("something went wrong"));
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+      switch (e.code) {
+        case 'invalid-email':
+          errorMessage = "📧 Please enter a valid email address.";
+          break;
+        case 'email-already-in-use':
+          errorMessage = "⚠️ Email already in use.";
+          break;
+        case 'weak-password':
+          errorMessage = "🔒 Password must be at least 6 characters.";
+          break;
+        default:
+          errorMessage = "❌Please fill all fields";
+      }
+      emit(AuthFailure(errorMessage));
+    } catch (_) {
+      emit(AuthFailure("❌ Unknown registration error."));
     }
   }
 
