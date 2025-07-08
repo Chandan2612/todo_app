@@ -57,14 +57,3 @@ Add screenshots of your app UI here to showcase design and features.
 
 ---
 
-## 🙌 Contribution
-
-Feel free to fork the project and suggest improvements!
-
----
-
-## 📧 Contact
-
-If you have any questions or suggestions, feel free to reach out.
-
----
