@@ -21,7 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       emit(AuthSuccess());
     } catch (e) {
-      emit(AuthFailure(e.toString()));
+      emit(AuthFailure("Credential does not match"));
     }
   }
 
@@ -34,7 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       emit(AuthSuccess());
     } catch (e) {
-      emit(AuthFailure(e.toString()));
+      emit(AuthFailure("something went wrong"));
     }
   }
 
