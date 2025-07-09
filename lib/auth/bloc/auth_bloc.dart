@@ -32,8 +32,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         case 'wrong-password':
           errorMessage = "🔑 Incorrect password.";
           break;
+        case 'invalid-credential':
+          errorMessage = "❌Please fill correct email and password";
+          break;
         default:
-          errorMessage = "❌ Please fill all fields";
+          errorMessage = "❌Please fill all fields";
+        // errorMessage = "❌ ${e.code}";
       }
       emit(AuthFailure(errorMessage));
     } catch (_) {
