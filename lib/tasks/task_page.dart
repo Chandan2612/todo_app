@@ -100,24 +100,22 @@ class _TaskPageState extends State<TaskPage> {
         padding: const EdgeInsets.only(bottom: 80),
         itemCount: tasks.length,
         itemBuilder: (_, i) {
-          final task = tasks[i];
-
           return Card(
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             elevation: 2,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: ListTile(
               leading: Checkbox(
-                value: task.isCompleted,
+                value: tasks[i].isCompleted,
                 onChanged: (_) {
-                  final updated = task.copyWith(isCompleted: !task.isCompleted);
+                  final updated = tasks[i].copyWith(isCompleted: !tasks[i].isCompleted);
                   context.read<TaskBloc>().add(UpdateTask(updated));
                 },
               ),
               title: Text(
-                task.title,
+                tasks[i].title,
                 style: TextStyle(
-                  decoration: task.isCompleted ? TextDecoration.lineThrough : null,
+                  decoration: tasks[i].isCompleted ? TextDecoration.lineThrough : null,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -126,12 +124,12 @@ class _TaskPageState extends State<TaskPage> {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.edit, color: Colors.blueAccent),
-                    onPressed: () => _showEditDialog(task),
+                    onPressed: () => _showEditDialog(tasks[i]),
                   ),
                   IconButton(
                     icon: const Icon(Icons.delete, color: Colors.redAccent),
                     onPressed: () {
-                      context.read<TaskBloc>().add(DeleteTask(task.id));
+                      context.read<TaskBloc>().add(DeleteTask(tasks[i].id));
                     },
                   ),
                 ],
@@ -191,15 +189,11 @@ class _TaskPageState extends State<TaskPage> {
     return Scaffold(
       appBar: AppBar(title: const Text("📝 Your Tasks")),
       drawer: _buildDrawer(),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return Column(
-            children: [
-              _buildTaskInput(),
-              Expanded(child: BlocBuilder<TaskBloc, TaskState>(builder: (_, state) => _buildTaskList(state))),
-            ],
-          );
-        },
+      body: Column(
+        children: [
+          _buildTaskInput(),
+          Expanded(child: BlocBuilder<TaskBloc, TaskState>(builder: (_, state) => _buildTaskList(state))),
+        ],
       ),
     );
   }

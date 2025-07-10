@@ -6,13 +6,11 @@ import 'package:travel/tasks/task_service.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   TaskBloc() : super(TaskInitial()) {
-    // Load from Firebase
     on<LoadTasks>((event, emit) async {
       final tasks = await FirebaseTaskService.fetchTasks();
       emit(TaskLoaded(tasks));
     });
 
-    // Add new task
     on<AddTask>((event, emit) async {
       if (state is TaskLoaded) {
         final current = (state as TaskLoaded).tasks;
@@ -25,18 +23,15 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       }
     });
 
-    // Update task
     on<UpdateTask>((event, emit) async {
       if (state is TaskLoaded) {
         final current = (state as TaskLoaded).tasks;
         await FirebaseTaskService.updateTask(event.task);
-        final updatedList = current.map((task) =>
-          task.id == event.task.id ? event.task : task).toList();
+        final updatedList = current.map((task) => task.id == event.task.id ? event.task : task).toList();
         emit(TaskLoaded(updatedList));
       }
     });
 
-    // Delete task
     on<DeleteTask>((event, emit) async {
       if (state is TaskLoaded) {
         final current = (state as TaskLoaded).tasks;
@@ -46,7 +41,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       }
     });
 
-    // Toggle completion
     on<ToggleCompleteTask>((event, emit) async {
       if (state is TaskLoaded) {
         final current = (state as TaskLoaded).tasks;
